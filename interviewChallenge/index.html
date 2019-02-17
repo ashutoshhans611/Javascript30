@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Hello, world!</title>
+	<style>
+		body {
+			margin: 0;
+		}
+
+		.container {
+			display: flex;
+			justify-content: space-between;
+			background: #e0e7e8;
+			padding: 10px;
+		}
+
+		.tags-container h1 {
+			margin-top: 0
+		}
+
+		.tags {
+			display: flex;
+		}
+
+		.tags span {
+			padding: 5px;
+			border: 1px solid grey;
+			border-radius: 12rem;
+			margin-right: 5px;
+			color: #2cd92c;
+			background-color: white;
+		}
+
+		.percentage-bar {
+			border: 1px solid grey;
+			display: inline-block;
+			margin: 2px;
+			width: 100px;
+			background: lightgray;
+			border-radius: 2rem;
+		}
+
+		.percentage-bar .percentage-indicator {
+			border-radius: 2rem;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="rating-graph">
+			<div class="average">
+				* <strong class="average-rating"></strong>
+				<span class="total-ratings"></span>
+			</div>
+			<div class="bars">
+				<div class="five">
+					<span>5</span>
+					<div class="percentage-bar"></div>
+					<span class="percentage"></span>
+				</div>
+				<div class="four">
+					<span>4</span>
+					<div class="percentage-bar"></div>
+					<span class="percentage"></span>
+				</div>
+				<div class="three">
+					<span>3</span>
+					<div class="percentage-bar"></div>
+					<span class="percentage"></span>
+				</div>
+				<div class="two">
+					<span>2</span>
+					<div class="percentage-bar"></div>
+					<span class="percentage"></span>
+				</div>
+				<div class="one">
+					<span>1</span>
+					<div class="percentage-bar"></div>
+					<span class="percentage"></span>
+				</div>
+			</div>
+		</div>
+		<div class="tags-container">
+			<h1> Truly Liked </h1>
+			<div class="tags"></div>
+		</div>
+	</div>
+	<script>
+		const data = {
+                    "Ratings": {
+                        "averageRating": 4.1,
+                        "totalRatings": 452,
+                        "Ratings": [
+                            10,
+                            4,
+                            10,
+                            25,
+                            51
+                        ]
+                    },
+                    "Tags": [
+                        {
+                            "SentimentTypeId": "1",
+                            "NoOfUsers": 15,
+                            "tagId": "47",
+                            "tagmsg": "On Time"
+                        },
+                        {
+                            "SentimentTypeId": "1",
+                            "NoOfUsers": 21,
+                            "tagId": "38",
+                            "tagmsg": "Ladies Friendly"
+                        },
+                        {
+                            "SentimentTypeId": "1",
+                            "NoOfUsers": 2,
+                            "tagId": "51",
+                            "tagmsg": "RestRooms"
+                        },
+                        {
+                            "SentimentTypeId": "1",
+                            "NoOfUsers": 1,
+                            "tagId": "35",
+                            "tagmsg": "Comfort"
+                        },
+                        {
+                            "SentimentTypeId": "1",
+                            "NoOfUsers": 10,
+                            "tagId": "37",
+                            "tagmsg": "Safety"
+                        }
+                    ],
+                    "TotalReviews": 54,
+                    "IndividualBusReviews": [{
+                        "pname": "Megha Maini",
+                        "ptitle": "MALE",
+                        "doj": "22-11-2018",
+                        "rateVal": 3,
+                        "key": "d94b82d47b",
+                        "reviewCmt": "Cleanliness was not up to the scale, but seating arrangement was cozy though. Would consider SAM to travel again.",
+                        "ThumbsDown": 0,
+                        "ThumbsUp": 0,
+                        "Helpfulness": false,
+                        "multimediaratingReviews": null,
+                        "ModeratedOperatorReply": "We are apologies for the trouble with your trip.Your feedback has been noted.",
+                        "OperatorReplyDate": "2-12-2018",
+                        "tagData": {
+                            "Negative": [{
+                                    "ReviewTagMsg": "Staff",
+                                    "ReviewTagID": "33"
+                                },
+                                {
+                                    "ReviewTagMsg": "Rest Rooms",
+                                    "ReviewTagID": "42"
+                                }
+                            ],
+                            "Positive": [
+                
+                            ]
+                        }
+                    }]
+                
+                }
+
+
+            /* Fetching the target elements */
+            const averageRatingHeading = document.querySelector('.average .average-rating');
+            const totalRating = document.querySelector('.average .total-ratings');
+            const allPercentageBars = document.querySelectorAll('.percentage');
+            const tagsContainer = document.querySelector('.tags');
+            const percentageBars = document.querySelectorAll('.percentage-bar');
+            
+            /* Creating the number of tag elements */ 
+            for( let i = 0; i < data.Tags.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = data.Tags[i].tagmsg + "-" + data.Tags[i].NoOfUsers;
+				 tagsContainer.append(span);
+
+            }
+            
+            /* updating the percentage bar */
+            let j = 0;
+            percentageBars.forEach(percentageBar => {
+                const percentageDiv = document.createElement('div');
+                percentageDiv.classList.add('percentage-indicator')
+                percentageDiv.style.width = `${data.Ratings.Ratings[j++]}px`;
+				percentageDiv.style.backgroundColor = "blue";
+				percentageDiv.style.height = "10px";
+                percentageBar.append(percentageDiv);
+            });
+
+            /* setting the data for the elements */
+            averageRatingHeading.textContent = data.Ratings.averageRating;
+            totalRating.textContent = "(" + data.Ratings.totalRatings + " Ratings)"; 
+            let i = 0;
+			allPercentageBars.forEach(perctanageBar => {
+				 perctanageBar.textContent = data.Ratings.Ratings[i++] + "%";
+            });
+	</script>
+</body>
+
+</html>
